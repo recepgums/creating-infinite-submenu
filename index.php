@@ -1,8 +1,6 @@
 <?php
 $baglan=mysqli_connect("localhost","root","","menu_tasarimi");
 
-//fonskiyon içinde bütün menüleri yazdırma işlemi için menüleri çekecen , diyelimki 2 tane menü var ,
-// foreach ile her müne gelince menünün id sini alacaksın, diyelimki menu_id = 1
 function yazdir($id=1,$b){
     $sorgu_menu=mysqli_query($b,"select * from menuler order by adi asc");
     $isim="a";
@@ -26,8 +24,7 @@ function oku($id=0,$b,$menu_id=1,$isim)
                 if ($row['kategori_mi']==0){
                     $kategori_mi_radio="checked";
                     $link_mi="";
-                    echo '<a href="'.$row['link'].'">'.$row['adi'].'</a>';;
-                    //echo '<script>document.getElementById("baglanti").style.display="block";</script>';
+                    echo '<a href="'.$row['link'].'">'.$row['adi'].'</a>';
                 }else{
                     $link_mi="checked";
                     $kategori_mi_radio="";
@@ -83,28 +80,6 @@ Link <input type="text" placeholder="link yoksa boş bırakın...  " id="link_tx
 <button onclick='ajax("ekle")'>Ekle</button> <button onclick='ajax("sil")'>Sil</button>
 <div id="goster"></div>
 <script>
-    /* bu fonksiyonlara sonradan gerek kalmadı ama bakmak istersen
-    function anamenu() {
-        var node = document.createElement("LI");
-        var metin=$("#metin").val();
-        console.log(metin);
-        var textnode = document.createTextNode(metin);
-        node.appendChild(textnode);
-        document.getElementById("birinci").appendChild(node);
-    }
-    function ikincimenu() {
-        var node = document.createElement("LI");
-        var ikinci=$("#ikinci_txt").val();
-        console.log(ikinci);
-        var textnode = document.createTextNode(ikinci);
-        node.appendChild(textnode);
-        document.getElementById("sayilar").appendChild(node);
-    }
-    function sil() {
-        var list=document.getElementById("birinci");
-        console.log(list.childNodes[2]);
-        //list.removeChild(list.childNodes[1]);
-    }*/
     function  ajax(secim) {
         if (secim=="ekle") {
             $.ajax({
@@ -112,9 +87,7 @@ Link <input type="text" placeholder="link yoksa boş bırakın...  " id="link_tx
                 type: "post",
                 data: {adi: $("#metin").val(), atasi: $("#ikinci_txt").val(),secim:1,menu_id:$("#menu_txt").val(),link:$("#link_txt").val()},
                 success: function (result) {
-
                     $("#goster").html(result);
-
                 }
             })
         }
@@ -124,9 +97,7 @@ Link <input type="text" placeholder="link yoksa boş bırakın...  " id="link_tx
                 type: "post",
                 data: {adi: $("#metin").val(), atasi: $("#ikinci_txt").val(),secim:0},
                 success: function (result) {
-
                     $("#goster").html(result);
-
                 }
             })
         }
